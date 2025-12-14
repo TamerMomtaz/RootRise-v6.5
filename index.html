@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RootRise by DEVONEERS — AI-&I Powered SME Transformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-primary: #B8904A;
+            --gold-card: #EDE0C8;
+            --gold-card-hover: #E5D5B8;
+            --champagne: #F7E7CE;
+            --cream: #F5F1E8;
+            --cream-warm: #F0EBE0;
+            --pearl: #E8E0D0;
+            --teal: #2A5C5C;
+            --teal-deep: #1E4A4A;
+            --teal-dark-bg: #0D2626;
+            --teal-card-dark: #153838;
+            --burgundy: #722F37;
+            --burgundy-tint: #F5E8EA;
+            --text-dark: #1A1A1A;
+            --text-medium: #4A4A4A;
+            --text-light: #6A6A6A;
+            --text-white: #FFFFFF;
+            --text-cream: #F5F1E8;
+        }
+
+        [data-theme="light"] {
+            --bg-page: var(--cream);
+            --bg-card: var(--gold-card);
+            --bg-card-hover: var(--gold-card-hover);
+            --bg-hero: var(--cream);
+            --border-primary: #C9B896;
+            --border-subtle: #D4CFC4;
+            --accent-primary: var(--teal);
+            --accent-secondary: var(--gold-primary);
+            --text-primary: var(--text-dark);
+            --text-secondary: var(--text-medium);
+            --text-muted: var(--text-light);
+            --text-on-accent: var(--text-white);
+            --title-color: var(--teal);
+            --brand-color: var(--gold-primary);
+        }
+
+        [data-theme="teal"] {
+            --bg-page: var(--teal-dark-bg);
+            --bg-card: var(--teal-card-dark);
+            --bg-card-hover: var(--teal-deep);
+            --bg-hero: var(--teal-dark-bg);
+            --border-primary: var(--teal);
+            --border-subtle: #1E4A4A;
+            --accent-primary: var(--gold-primary);
+            --accent-secondary: var(--champagne);
+            --text-primary: var(--text-cream);
+            --text-secondary: #B8C4C4;
+            --text-muted: #8A9E9E;
+            --text-on-accent: var(--text-dark);
+            --title-color: var(--champagne);
+            --brand-color: var(--gold-primary);
+        }
+
+        [data-theme="burgundy"] {
+            --bg-page: var(--cream);
+            --bg-card: var(--burgundy-tint);
+            --bg-card-hover: #EBDADC;
+            --bg-hero: var(--cream);
+            --border-primary: #C9A0A5;
+            --border-subtle: #D4C4C6;
+            --accent-primary: var(--burgundy);
+            --accent-secondary: var(--burgundy);
+            --text-primary: var(--text-dark);
+            --text-secondary: var(--text-medium);
+            --text-muted: var(--text-light);
+            --text-on-accent: var(--text-white);
+            --title-color: var(--burgundy);
+            --brand-color: var(--gold-primary);
+        }
+
+        [data-theme="gold"] {
+            --bg-page: var(--gold-card);
+            --bg-card: var(--champagne);
+            --bg-card-hover: var(--cream);
+            --bg-hero: var(--gold-card);
+            --border-primary: var(--gold-primary);
+            --border-subtle: #C9B896;
+            --accent-primary: var(--teal);
+            --accent-secondary: var(--teal);
+            --text-primary: var(--text-dark);
+            --text-secondary: var(--text-medium);
+            --text-muted: var(--text-light);
+            --text-on-accent: var(--text-white);
+            --title-color: var(--teal);
+            --brand-color: var(--gold-primary);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* Page switching */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            background: var(--bg-card);
+            border-radius: 50px;
+            padding: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-primary);
+        }
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover { transform: scale(1.1); }
+        .theme-btn.active { border-color: var(--text-primary); transform: scale(1.15); }
+
+        .theme-btn-light { background: linear-gradient(135deg, #F5F1E8 50%, #EDE0C8 50%); }
+        .theme-btn-teal { background: linear-gradient(135deg, #0D2626 50%, #2A5C5C 50%); }
+        .theme-btn-burgundy { background: linear-gradient(135deg, #F5F1E8 50%, #722F37 50%); }
+        .theme-btn-gold { background: linear-gradient(135deg, #EDE0C8 50%, #2A5C5C 50%); }
+
+        /* ==================== HOME PAGE STYLES ==================== */
+        
+        /* Navigation */
+        .home-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: var(--bg-hero);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--brand-color);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover { color: var(--accent-primary); }
+
+        .nav-cta {
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+
+        @media (max-width: 768px) {
+            .home-nav { padding: 15px 20px; flex-wrap: wrap; gap: 15px; }
+            .nav-links { gap: 15px; }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 80px;
+            background: var(--bg-hero);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--brand-color);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .hero-tagline {
+            font-size: 24px;
+            color: var(--title-color);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+            padding: 16px 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-primary);
+            padding: 16px 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid var(--accent-primary);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover { background: var(--accent-primary); color: var(--text-on-accent); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .hero-tagline { font-size: 20px; }
+        }
+
+        /* Stats Bar */
+        .stats-section {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            padding: 40px 20px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .stat-item { text-align: center; }
+        .stat-value { font-family: 'Cinzel', serif; font-size: 48px; font-weight: 700; color: var(--brand-color); }
+        .stat-label { font-size: 14px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Three Pillars */
+        .pillars {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pillars-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pillars-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            color: var(--title-color);
+            margin-bottom: 15px;
+        }
+
+        .pillars-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
+
+        .pillar-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid var(--border-primary);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--accent-primary);
+        }
+
+        .pillar-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+
+        .pillar-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 25px;
+        }
+
+        .pillar-card h3 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--title-color); margin-bottom: 10px; }
+        .pillar-count { font-size: 14px; color: var(--accent-primary); font-weight: 600; margin-bottom: 15px; }
+        .pillar-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 20px;
+            background: var(--bg-card);
+        }
+
+        .how-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .how-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            color: var(--title-color);
+        }
+
+        .how-steps {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step { flex: 1; min-width: 200px; max-width: 280px; text-align: center; }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .step h4 { font-size: 18px; color: var(--title-color); margin-bottom: 10px; }
+        .step p { font-size: 14px; color: var(--text-secondary); }
+        .step-time { font-size: 12px; color: var(--accent-primary); font-weight: 600; margin-top: 10px; }
+
+        /* Philosophy */
+        .philosophy {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .philosophy-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .philosophy-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            color: var(--title-color);
+            margin-bottom: 15px;
+        }
+
+        .philosophy-subtitle { color: var(--text-secondary); font-size: 18px; }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 100px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) { .philosophy-grid { grid-template-columns: 1fr; } }
+
+        .philosophy-side {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border-primary);
+        }
+
+        .philosophy-side h3 { font-size: 20px; color: var(--title-color); margin-bottom: 20px; }
+        .philosophy-side ul { list-style: none; }
+
+        .philosophy-side li {
+            padding: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .philosophy-side li:last-child { border-bottom: none; }
+        .philosophy-side li::before { content: '→'; position: absolute; left: 0; color: var(--accent-primary); }
+
+        .philosophy-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--brand-color);
+            font-family: 'Cinzel', serif;
+        }
+
+        @media (max-width: 768px) { .philosophy-center { font-size: 32px; padding: 20px 0; } }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+        }
+
+        .cta-section h2 { font-family: 'Cinzel', serif; font-size: 36px; margin-bottom: 15px; }
+        .cta-section p { font-size: 18px; opacity: 0.9; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        .cta-btn {
+            background: white;
+            color: var(--teal);
+            padding: 18px 50px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+
+        /* Footer */
+        .home-footer {
+            padding: 60px 20px 30px;
+            background: var(--bg-hero);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-brand { max-width: 300px; }
+        .footer-logo { font-family: 'Cinzel', serif; font-size: 28px; color: var(--brand-color); margin-bottom: 15px; }
+        .footer-tagline { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
+        .footer-devoneers { font-size: 12px; color: var(--text-muted); }
+
+        .footer-links h4 { font-size: 14px; color: var(--title-color); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links a, .footer-links span { display: block; font-size: 14px; color: var(--text-secondary); text-decoration: none; padding: 6px 0; transition: color 0.3s; cursor: pointer; }
+        .footer-links a:hover, .footer-links span:hover { color: var(--accent-primary); }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* ==================== ARCHITECTURE PAGE STYLES ==================== */
+
+        .arch-header {
+            text-align: center;
+            padding: 50px 20px 40px;
+            background: var(--bg-hero);
+            border-bottom: 4px solid var(--brand-color);
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .arch-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            color: var(--brand-color);
+        }
+
+        .arch-subtitle { color: var(--text-secondary); font-size: 16px; max-width: 650px; margin: 0 auto; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border-radius: 30px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover { background: var(--bg-card-hover); color: var(--accent-primary); }
+
+        .arch-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .arch-stat {
+            text-align: center;
+            background: var(--bg-card);
+            padding: 16px 28px;
+            border-radius: 12px;
+            border: 1px solid var(--border-primary);
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .arch-stat-value { font-family: 'Cinzel', serif; font-size: 32px; color: var(--brand-color); font-weight: 600; }
+        .arch-stat-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-tab {
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            background: var(--bg-card-hover);
+        }
+
+        .nav-tab:hover { background: var(--bg-page); color: var(--accent-primary); }
+        .nav-tab.active { background: var(--accent-primary); color: var(--text-on-accent); }
+
+        .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-primary); }
+        .nav-tab.active .nav-dot { background: var(--text-on-accent); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .section-bar {
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+            padding: 14px 30px;
+            margin: 0 -20px 30px -20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section { padding: 40px 0 60px 0; border-bottom: 1px solid var(--border-subtle); }
+        .section-header { margin-bottom: 25px; }
+
+        .section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .section-title { font-family: 'Cinzel', serif; font-size: 32px; font-weight: 600; margin-bottom: 10px; color: var(--title-color); }
+        .section-desc { color: var(--text-secondary); font-size: 15px; max-width: 700px; }
+
+        .cards-grid { display: grid; gap: 16px; }
+        .cards-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+        .cards-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+
+        @media (max-width: 900px) { .cards-grid.four-col, .cards-grid.three-col { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .cards-grid.four-col, .cards-grid.three-col { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-left: 4px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 18px 22px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .card:hover { background: var(--bg-card-hover); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .card.selected { background: var(--champagne); border: 2px solid var(--brand-color); border-left: 4px solid var(--brand-color); }
+        .card.supervisor { grid-column: 1 / -1; background: var(--champagne); border: 2px solid var(--brand-color); border-left: 6px solid var(--brand-color); }
+
+        [data-theme="teal"] .card.supervisor, [data-theme="teal"] .card.selected { background: var(--teal-deep); }
+
+        .card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; background: var(--accent-primary); }
+        .card-icon.addon { background: var(--bg-page); border: 2px solid var(--accent-secondary); }
+
+        .card-info { flex: 1; min-width: 0; }
+        .card-name { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 600; margin-bottom: 3px; color: var(--title-color); }
+        .card-role { font-size: 12px; color: var(--text-secondary); }
+
+        .card-badge { padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; background: var(--accent-primary); color: var(--text-on-accent); }
+        .card-badge.addon { background: transparent; border: 2px solid var(--accent-secondary); color: var(--accent-secondary); }
+
+        .type-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 6px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid var(--border-primary);
+        }
+
+        .type-btn {
+            padding: 14px 36px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+        }
+
+        .type-btn:hover { background: var(--bg-page); color: var(--accent-primary); }
+        .type-btn.active { background: var(--accent-primary); color: var(--text-on-accent); }
+
+        .sector-group { display: none; }
+        .sector-group.active { display: block; }
+
+        .sector-group-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-primary);
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .sector-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-left: 4px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sector-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); }
+        .sector-card.selected { background: var(--champagne); border: 2px solid var(--brand-color); }
+
+        .sector-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .sector-icon { font-size: 24px; }
+        .sector-name { font-size: 15px; font-weight: 600; color: var(--title-color); }
+        .sector-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .sector-tag { background: rgba(42, 92, 92, 0.15); color: var(--accent-primary); padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+
+        .eye-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-left: 4px solid var(--accent-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .eye-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); }
+        .eye-card.featured { background: var(--champagne); border: 2px solid var(--brand-color); border-left: 6px solid var(--brand-color); }
+        .eye-card.selected { background: var(--champagne); border: 2px solid var(--brand-color); }
+
+        [data-theme="teal"] .eye-card.featured, [data-theme="teal"] .eye-card.selected { background: var(--teal-deep); }
+
+        .eye-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .eye-icon { font-size: 24px; }
+        .eye-name { font-size: 15px; font-weight: 600; color: var(--accent-secondary); }
+        .new-tag { background: var(--accent-primary); color: var(--text-on-accent); padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 700; margin-left: 8px; }
+        .eye-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; font-style: italic; }
+        .eye-focus { display: flex; flex-wrap: wrap; gap: 6px; }
+        .eye-focus-tag { background: rgba(184, 144, 74, 0.15); color: var(--accent-secondary); padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+
+        .detail-panel {
+            background: var(--bg-card);
+            border-radius: 16px;
+            margin-top: 25px;
+            overflow: hidden;
+            border: 1px solid var(--border-primary);
+            border-top: 4px solid var(--accent-primary);
+            display: none;
+        }
+
+        .detail-panel.active { display: block; }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 28px;
+            background: var(--bg-card-hover);
+            border-bottom: 1px solid var(--border-primary);
+        }
+
+        .detail-icon { width: 64px; height: 64px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 32px; background: var(--accent-primary); }
+        .detail-title { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 600; color: var(--title-color); }
+        .detail-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+
+        .detail-content { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 28px; }
+        @media (max-width: 700px) { .detail-content { grid-template-columns: 1fr; } }
+
+        .detail-section h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; font-weight: 700; color: var(--accent-primary); }
+
+        .detail-section ul {
+            list-style: none;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--bg-page);
+            border-radius: 12px;
+            padding: 16px 20px;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .detail-section ul li { padding: 8px 0; padding-left: 18px; position: relative; border-bottom: 1px solid var(--border-subtle); }
+        .detail-section ul li:last-child { border-bottom: none; }
+        .detail-section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent-primary); font-weight: 600; }
+
+        .arch-footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--bg-hero);
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 4px solid var(--brand-color);
+        }
+
+        .arch-footer .logo { font-family: 'Cinzel', serif; font-size: 28px; margin-bottom: 10px; color: var(--brand-color); }
+
+        .balance-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 20px auto; max-width: 400px; }
+        .balance-bar .beige { flex: 30; background: var(--pearl); }
+        .balance-bar .gold { flex: 30; background: var(--gold-primary); }
+        .balance-bar .teal { flex: 30; background: var(--teal); }
+        .balance-bar .burgundy { flex: 10; background: var(--burgundy); }
+    </style>
+</head>
+<body>
+    <!-- Theme Switcher (always visible) -->
+    <div class="theme-switcher">
+        <div class="theme-btn theme-btn-light active" id="btn-light"></div>
+        <div class="theme-btn theme-btn-teal" id="btn-teal"></div>
+        <div class="theme-btn theme-btn-burgundy" id="btn-burgundy"></div>
+        <div class="theme-btn theme-btn-gold" id="btn-gold"></div>
+    </div>
+
+    <!-- ==================== HOME PAGE ==================== -->
+    <div class="page active" id="home-page">
+        <nav class="home-nav">
+            <div class="nav-logo">RootRise</div>
+            <div class="nav-links">
+                <span class="nav-link" id="link-pillars">How It Works</span>
+                <span class="nav-link" id="link-philosophy">The &I</span>
+                <button class="nav-cta" id="nav-enter-platform">Enter Platform →</button>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-badge">AI-&I Powered Situator</div>
+            <h1>RootRise</h1>
+            <p class="hero-tagline">6 Months of Consulting → 2 Minutes</p>
+            <p class="hero-subtitle">
+                The first AI diagnostic platform built specifically for MENA SMEs. 
+                Get institutional-grade business analysis with actionable recommendations 
+                tailored to your sector, context, and goals.
+            </p>
+            <div class="hero-ctas">
+                <button class="btn-primary" id="hero-start-btn">Start Your Diagnostic →</button>
+                <button class="btn-secondary" id="hero-learn-btn">Learn More</button>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-item"><div class="stat-value">200+</div><div class="stat-label">SMEs Served</div></div>
+            <div class="stat-item"><div class="stat-value">12,450</div><div class="stat-label">Jobs Impacted</div></div>
+            <div class="stat-item"><div class="stat-value">$45M</div><div class="stat-label">GDP Contribution</div></div>
+            <div class="stat-item"><div class="stat-value">31</div><div class="stat-label">Industry Sectors</div></div>
+        </section>
+
+        <section class="pillars" id="pillars">
+            <div class="pillars-header">
+                <h2>The RootRise System</h2>
+                <p>Three layers of intelligence working together to deliver personalized, actionable insights</p>
+            </div>
+            <div class="pillars-grid">
+                <div class="pillar-card"><div class="pillar-icon">🏛️</div><h3>The Pantheon</h3><div class="pillar-count">11 Specialist AI Agents</div><p>Your AI advisory council — specialist agents named after business pioneers.</p></div>
+                <div class="pillar-card"><div class="pillar-icon">🏭</div><h3>My Sector</h3><div class="pillar-count">31 Industry Contexts</div><p>Deep industry intelligence including standards, benchmarks, and MENA-specific regulations.</p></div>
+                <div class="pillar-card"><div class="pillar-icon">👁️</div><h3>The &Eye</h3><div class="pillar-count">15 Transformation Lenses</div><p>Your burning desire becomes the lens — we prioritize around YOUR goal.</p></div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="how-header"><h2>How It Works</h2></div>
+            <div class="how-steps">
+                <div class="step"><div class="step-number">1</div><h4>Configure</h4><p>Select your agents, sector, and transformation lens</p><div class="step-time">30 seconds</div></div>
+                <div class="step"><div class="step-number">2</div><h4>Answer</h4><p>Complete our smart questionnaire</p><div class="step-time">~2 minutes</div></div>
+                <div class="step"><div class="step-number">3</div><h4>Analyze</h4><p>AI agents process your data</p><div class="step-time">Real-time</div></div>
+                <div class="step"><div class="step-number">4</div><h4>Act</h4><p>Receive your transformation roadmap</p><div class="step-time">Immediate</div></div>
+            </div>
+        </section>
+
+        <section class="philosophy" id="philosophy">
+            <div class="philosophy-header">
+                <h2>The &I Philosophy</h2>
+                <p class="philosophy-subtitle">AI amplifies human judgment — it doesn't replace it</p>
+            </div>
+            <div class="philosophy-grid">
+                <div class="philosophy-side">
+                    <h3>AI's Role</h3>
+                    <ul>
+                        <li>Pattern recognition across thousands of SMEs</li>
+                        <li>24/7 processing & instant analysis</li>
+                        <li>Sector benchmarking & KPI tracking</li>
+                        <li>Predictive recommendations</li>
+                        <li>Consistent methodology</li>
+                    </ul>
+                </div>
+                <div class="philosophy-center">&</div>
+                <div class="philosophy-side">
+                    <h3>&I's Role</h3>
+                    <ul>
+                        <li>Local market context & relationships</li>
+                        <li>Cultural nuances & trust</li>
+                        <li>Strategic judgment & priorities</li>
+                        <li>Implementation expertise</li>
+                        <li>Human accountability</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Transform?</h2>
+            <p>Join 200+ SMEs across MENA who have already discovered their path to growth</p>
+            <button class="cta-btn" id="cta-start-btn">Start Your Free Diagnostic</button>
+        </section>
+
+        <footer class="home-footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">RootRise</div>
+                    <p class="footer-tagline">AI-&I Powered SME Transformation for the MENA Region</p>
+                    <p class="footer-devoneers">A Product by <strong>DEVONEERS</strong></p>
+                </div>
+                <div class="footer-links">
+                    <h4>Platform</h4>
+                    <span id="footer-pantheon">The Pantheon</span>
+                    <span id="footer-sector">My Sector</span>
+                    <span id="footer-eye">The &Eye</span>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="#">About DEVONEERS</a>
+                    <a href="#">Partners</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">© 2025 RootRise by DEVONEERS. All rights reserved.</div>
+        </footer>
+    </div>
+
+    <!-- ==================== ARCHITECTURE PAGE ==================== -->
+    <div class="page" id="arch-page">
+        <header class="arch-header">
+            <div class="badge">Architecture v6.5</div>
+            <h1>The RootRise System</h1>
+            <p class="arch-subtitle">Complete SME diagnostic architecture</p>
+            <div class="back-btn" id="back-to-home">← Back to Home</div>
+            <div class="arch-stats">
+                <div class="arch-stat"><div class="arch-stat-value">11</div><div class="arch-stat-label">Agents</div></div>
+                <div class="arch-stat"><div class="arch-stat-value">31</div><div class="arch-stat-label">Sectors</div></div>
+                <div class="arch-stat"><div class="arch-stat-value">15</div><div class="arch-stat-label">Lenses</div></div>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <div class="nav-tab active" id="nav-pantheon"><span class="nav-dot"></span>The Pantheon</div>
+            <div class="nav-tab" id="nav-sector"><span class="nav-dot"></span>My Sector</div>
+            <div class="nav-tab" id="nav-eye"><span class="nav-dot"></span>The &Eye</div>
+        </nav>
+
+        <div class="container">
+            <!-- PANTHEON -->
+            <section class="section" id="pantheon">
+                <div class="section-bar">🏛️ THE PANTHEON — AI Advisory Council</div>
+                <div class="section-header">
+                    <div class="section-label">11 Specialist Agents</div>
+                    <h2 class="section-title">Your AI Advisory Council</h2>
+                    <p class="section-desc">AI specialists named after business pioneers. Click any card to see details.</p>
+                </div>
+
+                <div class="cards-grid four-col" style="margin-bottom: 16px;">
+                    <div class="card supervisor" id="agent-drucker"><div class="card-icon">🎯</div><div class="card-info"><div class="card-name">The Drucker</div><div class="card-role">Peter Drucker — Father of Modern Management</div></div><div class="card-badge">Supervisor</div></div>
+                </div>
+
+                <div class="cards-grid four-col">
+                    <div class="card" id="agent-marvin"><div class="card-icon">🔍</div><div class="card-info"><div class="card-name">The Marvin</div><div class="card-role">Diagnostic & Consulting</div></div><div class="card-badge">Core</div></div>
+                    <div class="card" id="agent-graham"><div class="card-icon">💰</div><div class="card-info"><div class="card-name">The Graham</div><div class="card-role">Finance & Investment</div></div><div class="card-badge">Core</div></div>
+                    <div class="card" id="agent-ricardo"><div class="card-icon addon">🌍</div><div class="card-info"><div class="card-name">The Ricardo</div><div class="card-role">Export & Trade</div></div><div class="card-badge addon">Add-on</div></div>
+                    <div class="card" id="agent-lovelace"><div class="card-icon addon">💻</div><div class="card-info"><div class="card-name">The Lovelace</div><div class="card-role">Digital & Technology</div></div><div class="card-badge addon">Add-on</div></div>
+                    <div class="card" id="agent-mayo"><div class="card-icon addon">👥</div><div class="card-info"><div class="card-name">The Mayo</div><div class="card-role">HR & Organization</div></div><div class="card-badge addon">Add-on</div></div>
+                    <div class="card" id="agent-ohno"><div class="card-icon addon">📦</div><div class="card-info"><div class="card-name">The Ohno</div><div class="card-role">Supply Chain & Lean</div></div><div class="card-badge addon">Add-on</div></div>
+                    <div class="card" id="agent-porter"><div class="card-icon addon">📊</div><div class="card-info"><div class="card-name">The Porter</div><div class="card-role">Market & Competition</div></div><div class="card-badge addon">Add-on</div></div>
+                    <div class="card" id="agent-landor"><div class="card-icon addon">🏷️</div><div class="card-info"><div class="card-name">The Landor</div><div class="card-role">Packaging & Labeling</div></div><div class="card-badge addon">Add-on</div></div>
+                </div>
+
+                <div class="detail-panel" id="agent-panel">
+                    <div class="detail-header">
+                        <div class="detail-icon" id="agent-icon">🎯</div>
+                        <div><div class="detail-title" id="agent-name">The Drucker</div><div class="detail-subtitle" id="agent-bio">Peter Drucker (1909-2005)</div></div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-section"><h4>Core Function</h4><ul id="agent-functions"></ul></div>
+                        <div class="detail-section"><h4>Key Capabilities</h4><ul id="agent-capabilities"></ul></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTOR -->
+            <section class="section" id="sector">
+                <div class="section-bar">🏭 MY SECTOR — Industry Intelligence</div>
+                <div class="section-header">
+                    <div class="section-label">31 Industry Contexts</div>
+                    <h2 class="section-title">My Sector</h2>
+                    <p class="section-desc">Choose your industry. Click any sector card to see details.</p>
+                </div>
+
+                <div class="type-toggle">
+                    <div class="type-btn active" id="type-industrial">🏭 Industrial (14)</div>
+                    <div class="type-btn" id="type-services">🏢 Services (17)</div>
+                </div>
+
+                <div class="sector-group active" id="industrial-sectors">
+                    <div class="sector-group-label">🏭 Industrial / Manufacturing Sectors</div>
+                    <div class="cards-grid four-col">
+                        <div class="sector-card" id="sector-food"><div class="sector-header"><span class="sector-icon">🥫</span><span class="sector-name">Food Processing</span></div><div class="sector-tags"><span class="sector-tag">HACCP</span><span class="sector-tag">ISO 22000</span></div></div>
+                        <div class="sector-card" id="sector-pharma"><div class="sector-header"><span class="sector-icon">💊</span><span class="sector-name">Pharmaceuticals</span></div><div class="sector-tags"><span class="sector-tag">GMP</span><span class="sector-tag">WHO PQ</span></div></div>
+                        <div class="sector-card" id="sector-textile"><div class="sector-header"><span class="sector-icon">🧵</span><span class="sector-name">Textiles</span></div><div class="sector-tags"><span class="sector-tag">OEKO-TEX</span><span class="sector-tag">GOTS</span></div></div>
+                        <div class="sector-card" id="sector-automotive"><div class="sector-header"><span class="sector-icon">🚗</span><span class="sector-name">Automotive</span></div><div class="sector-tags"><span class="sector-tag">IATF 16949</span></div></div>
+                        <div class="sector-card" id="sector-cosmetics"><div class="sector-header"><span class="sector-icon">💄</span><span class="sector-name">Cosmetics</span></div><div class="sector-tags"><span class="sector-tag">ISO 22716</span><span class="sector-tag">Halal</span></div></div>
+                        <div class="sector-card" id="sector-electronics"><div class="sector-header"><span class="sector-icon">⚡</span><span class="sector-name">Electronics</span></div><div class="sector-tags"><span class="sector-tag">IPC</span><span class="sector-tag">RoHS</span></div></div>
+                    </div>
+                </div>
+
+                <div class="sector-group" id="services-sectors">
+                    <div class="sector-group-label">🏢 Services Sectors</div>
+                    <div class="cards-grid four-col">
+                        <div class="sector-card" id="sector-hospitality"><div class="sector-header"><span class="sector-icon">🏨</span><span class="sector-name">Hospitality</span></div><div class="sector-tags"><span class="sector-tag">ISO 9001</span></div></div>
+                        <div class="sector-card" id="sector-healthcare"><div class="sector-header"><span class="sector-icon">🏥</span><span class="sector-name">Healthcare</span></div><div class="sector-tags"><span class="sector-tag">JCI</span></div></div>
+                        <div class="sector-card" id="sector-logistics"><div class="sector-header"><span class="sector-icon">🚚</span><span class="sector-name">Logistics</span></div><div class="sector-tags"><span class="sector-tag">ISO 28000</span></div></div>
+                        <div class="sector-card" id="sector-it"><div class="sector-header"><span class="sector-icon">💻</span><span class="sector-name">IT Services</span></div><div class="sector-tags"><span class="sector-tag">ISO 27001</span></div></div>
+                    </div>
+                </div>
+
+                <div class="detail-panel" id="sector-panel">
+                    <div class="detail-header">
+                        <div class="detail-icon" id="sector-icon">🥫</div>
+                        <div><div class="detail-title" id="sector-name">Food Processing</div><div class="detail-subtitle" id="sector-sub">Manufacturing • HACCP • ISO 22000</div></div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-section"><h4>Key Standards</h4><ul id="sector-standards"></ul></div>
+                        <div class="detail-section"><h4>MENA Context</h4><ul id="sector-mena"></ul></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EYE -->
+            <section class="section" id="eye">
+                <div class="section-bar">👁️ THE &EYE — Your Transformation Lens</div>
+                <div class="section-header">
+                    <div class="section-label">15 Transformation Objectives</div>
+                    <h2 class="section-title">The &Eye — Your Lens</h2>
+                    <p class="section-desc">Click any lens to see what it prioritizes.</p>
+                </div>
+
+                <div class="cards-grid three-col">
+                    <div class="eye-card featured" id="eye-crema" style="grid-column: 1 / -1;"><div class="eye-header"><span class="eye-icon">☕</span><span class="eye-name">The Crema<span class="new-tag">DEFAULT</span></span></div><div class="eye-desc">"I want quick wins!"</div><div class="eye-focus"><span class="eye-focus-tag">30-60-90 Days</span><span class="eye-focus-tag">Low Effort</span><span class="eye-focus-tag">High Impact</span></div></div>
+                    <div class="eye-card" id="eye-export"><div class="eye-header"><span class="eye-icon">🌍</span><span class="eye-name">Export Readiness</span></div><div class="eye-desc">"I want to sell internationally"</div><div class="eye-focus"><span class="eye-focus-tag">Certifications</span><span class="eye-focus-tag">Logistics</span></div></div>
+                    <div class="eye-card" id="eye-investment"><div class="eye-header"><span class="eye-icon">💰</span><span class="eye-name">Investment Attraction</span></div><div class="eye-desc">"I want to raise capital"</div><div class="eye-focus"><span class="eye-focus-tag">Financials</span><span class="eye-focus-tag">Governance</span></div></div>
+                    <div class="eye-card" id="eye-profit"><div class="eye-header"><span class="eye-icon">📈</span><span class="eye-name">Profitability</span></div><div class="eye-desc">"I want better margins"</div><div class="eye-focus"><span class="eye-focus-tag">Costs</span><span class="eye-focus-tag">Efficiency</span></div></div>
+                    <div class="eye-card" id="eye-digital"><div class="eye-header"><span class="eye-icon">💻</span><span class="eye-name">Digital Transformation</span></div><div class="eye-desc">"I want to modernize"</div><div class="eye-focus"><span class="eye-focus-tag">Tech Stack</span><span class="eye-focus-tag">Automation</span></div></div>
+                    <div class="eye-card" id="eye-sustainability"><div class="eye-header"><span class="eye-icon">🌱</span><span class="eye-name">Sustainability</span></div><div class="eye-desc">"I want to be green"</div><div class="eye-focus"><span class="eye-focus-tag">ESG</span><span class="eye-focus-tag">Impact</span></div></div>
+                </div>
+
+                <div class="detail-panel" id="eye-panel">
+                    <div class="detail-header">
+                        <div class="detail-icon" id="eye-detail-icon">🌍</div>
+                        <div><div class="detail-title" id="eye-detail-name">Export Readiness</div><div class="detail-subtitle" id="eye-detail-desire">"I want to sell internationally"</div></div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-section"><h4>Focus Areas</h4><ul id="eye-focus-list"></ul></div>
+                        <div class="detail-section"><h4>Priority Agents</h4><ul id="eye-agents-list"></ul></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="arch-footer">
+            <div class="logo">RootRise</div>
+            <p>Architecture v6.5</p>
+            <div class="balance-bar"><div class="beige"></div><div class="gold"></div><div class="teal"></div><div class="burgundy"></div></div>
+        </footer>
+    </div>
+
+<script>
+// ============ DATA ============
+var agentData = {
+    'agent-drucker': { icon: '🎯', name: 'The Drucker', bio: 'Peter Drucker (1909-2005)', functions: ['Orchestrates all agents', 'Resolves conflicts', 'Synthesizes final report'], capabilities: ['Cross-domain analysis', 'Priority balancing', 'Executive summary'] },
+    'agent-marvin': { icon: '🔍', name: 'The Marvin', bio: 'Marvin Bower (1903-2003)', functions: ['5-pillar assessment', 'Management evaluation', 'Growth readiness'], capabilities: ['Holistic diagnostics', 'Benchmarking', 'Gap identification'] },
+    'agent-graham': { icon: '💰', name: 'The Graham', bio: 'Benjamin Graham (1894-1976)', functions: ['Financial health', 'Funding readiness', 'Capital structure'], capabilities: ['Ratio analysis', 'Valuation', 'Investment scoring'] },
+    'agent-ricardo': { icon: '🌍', name: 'The Ricardo', bio: 'David Ricardo (1772-1823)', functions: ['Export readiness', 'Market mapping', 'Trade compliance'], capabilities: ['Market entry', 'Tariff mapping', 'Partner identification'] },
+    'agent-lovelace': { icon: '💻', name: 'The Lovelace', bio: 'Ada Lovelace (1815-1852)', functions: ['Digital maturity', 'Tech stack', 'Automation mapping'], capabilities: ['Tech scoring', 'Digital roadmaps', 'Cybersecurity'] },
+    'agent-mayo': { icon: '👥', name: 'The Mayo', bio: 'Elton Mayo (1880-1949)', functions: ['Workforce optimization', 'Org structure', 'Culture assessment'], capabilities: ['Org design', 'Succession planning', 'Training needs'] },
+    'agent-ohno': { icon: '📦', name: 'The Ohno', bio: 'Taiichi Ohno (1912-1990)', functions: ['Supply chain', 'Lean operations', 'Inventory management'], capabilities: ['7 wastes', 'Value stream', 'Supplier assessment'] },
+    'agent-porter': { icon: '📊', name: 'The Porter', bio: 'Michael Porter (1947-)', functions: ['Market positioning', 'Competitive landscape', 'Industry forces'], capabilities: ['Five Forces', 'Value chain', 'Market sizing'] },
+    'agent-landor': { icon: '🏷️', name: 'The Landor', bio: 'Walter Landor (1913-1995)', functions: ['Packaging compliance', 'Label requirements', 'Export packaging'], capabilities: ['Label compliance', 'Packaging optimization', 'Shelf-ready'] }
+};
+
+var sectorData = {
+    'sector-food': { icon: '🥫', name: 'Food Processing', sub: 'Manufacturing • HACCP • ISO 22000', standards: ['HACCP — Hazard Analysis Critical Control Points', 'ISO 22000 — Food Safety Management', 'Halal Certification', 'FSSC 22000 for export markets'], mena: ['🇪🇬 Egypt: NFSA oversight, growing export hub', '🇸🇦 Saudi: SFDA requirements, Vision 2030 focus', '🇦🇪 UAE: ESMA standards, re-export gateway', '🇯🇴 Jordan: JFDA registration, EU trade agreements'] },
+    'sector-pharma': { icon: '💊', name: 'Pharmaceuticals', sub: 'Manufacturing • GMP • WHO PQ', standards: ['GMP — Good Manufacturing Practice', 'WHO Prequalification', 'ISO 15378 — Pharma Packaging', 'GDP — Good Distribution Practice'], mena: ['🇪🇬 Egypt: Largest Arab pharma market', '🇸🇦 Saudi: SFDA fast-track approvals', '🇦🇪 UAE: Regional distribution hub', '🇯🇴 Jordan: Strong generic manufacturing'] },
+    'sector-textile': { icon: '🧵', name: 'Textiles', sub: 'Manufacturing • OEKO-TEX • GOTS', standards: ['OEKO-TEX Standard 100', 'GOTS — Global Organic Textile Standard', 'ISO 9001 Quality Management', 'WRAP — Social Compliance'], mena: ['🇪🇬 Egypt: Premium cotton heritage', '🇸🇦 Saudi: Growing local manufacturing', '🇦🇪 UAE: Fashion retail hub', '🇯🇴 Jordan: QIZ trade advantages'] },
+    'sector-automotive': { icon: '🚗', name: 'Automotive', sub: 'Manufacturing • IATF 16949', standards: ['IATF 16949 — Automotive QMS', 'ISO 14001 — Environmental', 'VDA 6.3 — Process Audit', 'PPAP — Production Part Approval'], mena: ['🇪🇬 Egypt: Assembly & components hub', '🇸🇦 Saudi: Lucid & Ceer investments', '🇦🇪 UAE: EV infrastructure leader', '🇯🇴 Jordan: Component manufacturing'] },
+    'sector-cosmetics': { icon: '💄', name: 'Cosmetics', sub: 'Manufacturing • ISO 22716 • Halal', standards: ['ISO 22716 — Cosmetics GMP', 'Halal Certification', 'EU Cosmetics Regulation', 'FDA OTC Drug Standards'], mena: ['🇪🇬 Egypt: Growing local brands', '🇸🇦 Saudi: Largest beauty market', '🇦🇪 UAE: Premium positioning', '🇯🇴 Jordan: Dead Sea products niche'] },
+    'sector-electronics': { icon: '⚡', name: 'Electronics', sub: 'Manufacturing • IPC • RoHS', standards: ['IPC Standards — Electronics Assembly', 'RoHS — Restriction of Hazardous Substances', 'ISO 14001 — Environmental', 'WEEE — Waste Electronics Directive'], mena: ['🇪🇬 Egypt: Assembly operations growing', '🇸🇦 Saudi: Localization initiatives', '🇦🇪 UAE: Tech hub positioning', '🇯🇴 Jordan: IT services focus'] },
+    'sector-hospitality': { icon: '🏨', name: 'Hospitality', sub: 'Services • ISO 9001', standards: ['ISO 9001 — Quality Management', 'Green Key / Green Globe', 'HACCP for F&B operations', 'Local tourism licensing'], mena: ['🇪🇬 Egypt: Tourism diversification', '🇸🇦 Saudi: Vision 2030 mega-projects', '🇦🇪 UAE: Global tourism leader', '🇯🇴 Jordan: Heritage tourism focus'] },
+    'sector-healthcare': { icon: '🏥', name: 'Healthcare', sub: 'Services • JCI', standards: ['JCI — Joint Commission International', 'ISO 15189 — Medical Labs', 'CAP — College of American Pathologists', 'Local MOH licensing'], mena: ['🇪🇬 Egypt: Medical tourism growth', '🇸🇦 Saudi: Healthcare transformation', '🇦🇪 UAE: Medical hub ambitions', '🇯🇴 Jordan: Regional healthcare leader'] },
+    'sector-logistics': { icon: '🚚', name: 'Logistics', sub: 'Services • ISO 28000', standards: ['ISO 28000 — Supply Chain Security', 'AEO — Authorized Economic Operator', 'GDP for pharma logistics', 'Cold chain certifications'], mena: ['🇪🇬 Egypt: Suez Canal advantage', '🇸🇦 Saudi: Logistics hub investments', '🇦🇪 UAE: Global logistics leader', '🇯🇴 Jordan: Land bridge positioning'] },
+    'sector-it': { icon: '💻', name: 'IT Services', sub: 'Services • ISO 27001', standards: ['ISO 27001 — Information Security', 'SOC 2 — Service Organization Control', 'CMMI — Capability Maturity Model', 'GDPR compliance capabilities'], mena: ['🇪🇬 Egypt: Outsourcing destination', '🇸🇦 Saudi: Digital transformation push', '🇦🇪 UAE: Smart city initiatives', '🇯🇴 Jordan: IT talent pool'] }
+};
+
+var eyeData = {
+    'eye-crema': { icon: '☕', name: 'The Crema', desire: '"Quick wins! Productivity, efficiency, cost reduction"', focus: ['30-day immediate actions', '60-day process improvements', '90-day measurable milestones', 'Low effort, high impact priorities'], agents: ['The Ohno — Lean & waste elimination', 'The Graham — Cost structure analysis', 'The Marvin — Quick diagnostic scan'] },
+    'eye-export': { icon: '🌍', name: 'Export Readiness', desire: '"I want to sell internationally"', focus: ['Certification gap analysis', 'Target market identification', 'Logistics & documentation readiness', 'Pricing & compliance alignment'], agents: ['The Ricardo — Trade & market mapping', 'The Landor — Packaging compliance', 'The Porter — Market positioning'] },
+    'eye-investment': { icon: '💰', name: 'Investment Attraction', desire: '"I want to raise capital"', focus: ['Financial documentation readiness', 'Governance & structure optimization', 'Valuation preparation', 'Investor pitch alignment'], agents: ['The Graham — Financial analysis', 'The Porter — Market & competitive positioning', 'The Marvin — Due diligence readiness'] },
+    'eye-profit': { icon: '📈', name: 'Profitability', desire: '"I want better margins"', focus: ['Cost structure optimization', 'Pricing strategy review', 'Operational efficiency gains', 'Revenue leakage identification'], agents: ['The Ohno — Lean operations', 'The Graham — Margin analysis', 'The Porter — Pricing strategy'] },
+    'eye-digital': { icon: '💻', name: 'Digital Transformation', desire: '"I want to modernize"', focus: ['Current tech stack assessment', 'Automation opportunities', 'Digital presence optimization', 'Data & analytics readiness'], agents: ['The Lovelace — Digital maturity', 'The Marvin — Process assessment', 'The Mayo — Change management'] },
+    'eye-sustainability': { icon: '🌱', name: 'Sustainability', desire: '"I want to be green"', focus: ['Environmental impact baseline', 'ESG reporting readiness', 'Green certification pathways', 'Sustainable operations roadmap'], agents: ['The Marvin — ESG assessment', 'The Ohno — Resource efficiency', 'The Ricardo — Green export opportunities'] }
+};
+
+// ============ PAGE SWITCHING ============
+function showPage(pageId) {
+    document.getElementById('home-page').classList.remove('active');
+    document.getElementById('arch-page').classList.remove('active');
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+// Home page buttons to Architecture
+document.getElementById('nav-enter-platform').onclick = function() { showPage('arch-page'); };
+document.getElementById('hero-start-btn').onclick = function() { showPage('arch-page'); };
+document.getElementById('cta-start-btn').onclick = function() { showPage('arch-page'); };
+document.getElementById('footer-pantheon').onclick = function() { showPage('arch-page'); };
+document.getElementById('footer-sector').onclick = function() { showPage('arch-page'); };
+document.getElementById('footer-eye').onclick = function() { showPage('arch-page'); };
+
+// Back to home
+document.getElementById('back-to-home').onclick = function() { showPage('home-page'); };
+
+// Home page scroll links
+document.getElementById('link-pillars').onclick = function() { document.getElementById('pillars').scrollIntoView({ behavior: 'smooth' }); };
+document.getElementById('link-philosophy').onclick = function() { document.getElementById('philosophy').scrollIntoView({ behavior: 'smooth' }); };
+document.getElementById('hero-learn-btn').onclick = function() { document.getElementById('pillars').scrollIntoView({ behavior: 'smooth' }); };
+
+// ============ THEME SWITCHING ============
+document.getElementById('btn-light').onclick = function() { setTheme('light', this); };
+document.getElementById('btn-teal').onclick = function() { setTheme('teal', this); };
+document.getElementById('btn-burgundy').onclick = function() { setTheme('burgundy', this); };
+document.getElementById('btn-gold').onclick = function() { setTheme('gold', this); };
+
+function setTheme(theme, btn) {
+    document.documentElement.setAttribute('data-theme', theme);
+    var btns = document.querySelectorAll('.theme-btn');
+    for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+    btn.classList.add('active');
+    localStorage.setItem('rootrise-theme', theme);
+}
+
+// Load saved theme
+var savedTheme = localStorage.getItem('rootrise-theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+var activeBtn = document.querySelector('.theme-btn-' + savedTheme);
+if (activeBtn) {
+    var btns = document.querySelectorAll('.theme-btn');
+    for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+    activeBtn.classList.add('active');
+}
+
+// ============ ARCHITECTURE NAV TABS ============
+document.getElementById('nav-pantheon').onclick = function() { navTo('pantheon', this); };
+document.getElementById('nav-sector').onclick = function() { navTo('sector', this); };
+document.getElementById('nav-eye').onclick = function() { navTo('eye', this); };
+
+function navTo(section, btn) {
+    var tabs = document.querySelectorAll('.nav-tab');
+    for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
+    btn.classList.add('active');
+    document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+}
+
+// ============ TYPE TOGGLE ============
+document.getElementById('type-industrial').onclick = function() {
+    document.getElementById('type-industrial').classList.add('active');
+    document.getElementById('type-services').classList.remove('active');
+    document.getElementById('industrial-sectors').classList.add('active');
+    document.getElementById('services-sectors').classList.remove('active');
+    document.getElementById('sector-panel').classList.remove('active');
+};
+
+document.getElementById('type-services').onclick = function() {
+    document.getElementById('type-services').classList.add('active');
+    document.getElementById('type-industrial').classList.remove('active');
+    document.getElementById('services-sectors').classList.add('active');
+    document.getElementById('industrial-sectors').classList.remove('active');
+    document.getElementById('sector-panel').classList.remove('active');
+};
+
+// ============ AGENT CARDS ============
+var agentIds = ['agent-drucker', 'agent-marvin', 'agent-graham', 'agent-ricardo', 'agent-lovelace', 'agent-mayo', 'agent-ohno', 'agent-porter', 'agent-landor'];
+for (var i = 0; i < agentIds.length; i++) {
+    (function(id) {
+        document.getElementById(id).onclick = function() {
+            var cards = document.querySelectorAll('.card');
+            for (var j = 0; j < cards.length; j++) { cards[j].classList.remove('selected'); }
+            this.classList.add('selected');
+            
+            var d = agentData[id];
+            document.getElementById('agent-icon').textContent = d.icon;
+            document.getElementById('agent-name').textContent = d.name;
+            document.getElementById('agent-bio').textContent = d.bio;
+            document.getElementById('agent-functions').innerHTML = d.functions.map(function(f) { return '<li>' + f + '</li>'; }).join('');
+            document.getElementById('agent-capabilities').innerHTML = d.capabilities.map(function(c) { return '<li>' + c + '</li>'; }).join('');
+            document.getElementById('agent-panel').classList.add('active');
+        };
+    })(agentIds[i]);
+}
+
+// ============ SECTOR CARDS ============
+var sectorIds = ['sector-food', 'sector-pharma', 'sector-textile', 'sector-automotive', 'sector-cosmetics', 'sector-electronics', 'sector-hospitality', 'sector-healthcare', 'sector-logistics', 'sector-it'];
+for (var i = 0; i < sectorIds.length; i++) {
+    (function(id) {
+        document.getElementById(id).onclick = function() {
+            var cards = document.querySelectorAll('.sector-card');
+            for (var j = 0; j < cards.length; j++) { cards[j].classList.remove('selected'); }
+            this.classList.add('selected');
+            
+            var d = sectorData[id];
+            document.getElementById('sector-icon').textContent = d.icon;
+            document.getElementById('sector-name').textContent = d.name;
+            document.getElementById('sector-sub').textContent = d.sub;
+            document.getElementById('sector-standards').innerHTML = d.standards.map(function(s) { return '<li>' + s + '</li>'; }).join('');
+            document.getElementById('sector-mena').innerHTML = d.mena.map(function(m) { return '<li>' + m + '</li>'; }).join('');
+            document.getElementById('sector-panel').classList.add('active');
+        };
+    })(sectorIds[i]);
+}
+
+// ============ EYE CARDS ============
+var eyeIds = ['eye-crema', 'eye-export', 'eye-investment', 'eye-profit', 'eye-digital', 'eye-sustainability'];
+for (var i = 0; i < eyeIds.length; i++) {
+    (function(id) {
+        document.getElementById(id).onclick = function() {
+            var cards = document.querySelectorAll('.eye-card');
+            for (var j = 0; j < cards.length; j++) { cards[j].classList.remove('selected'); }
+            this.classList.add('selected');
+            
+            var d = eyeData[id];
+            document.getElementById('eye-detail-icon').textContent = d.icon;
+            document.getElementById('eye-detail-name').textContent = d.name;
+            document.getElementById('eye-detail-desire').textContent = d.desire;
+            document.getElementById('eye-focus-list').innerHTML = d.focus.map(function(f) { return '<li>' + f + '</li>'; }).join('');
+            document.getElementById('eye-agents-list').innerHTML = d.agents.map(function(a) { return '<li>' + a + '</li>'; }).join('');
+            document.getElementById('eye-panel').classList.add('active');
+        };
+    })(eyeIds[i]);
+}
+</script>
+</body>
+</html>
