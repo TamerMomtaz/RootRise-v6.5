@@ -168,7 +168,8 @@
 }
 
 .logo-text, .logo-icon {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
+    opacity: 1;
 }
 
 .logo-icon {
@@ -1184,21 +1185,29 @@ var eyeData = {
     'eye-sustainability': { icon: '🌱', name: 'Sustainability', desire: '"I want to be green"', focus: ['Environmental impact baseline', 'ESG reporting readiness', 'Green certification pathways', 'Sustainable operations roadmap'], agents: ['The Marvin — ESG assessment', 'The Ohno — Resource efficiency', 'The Ricardo — Green export opportunities'] }
 };
 
-   // ============ CYCLING LOGO ANIMATION ============
+   // ============ CYCLING LOGO WITH FADE ============
 var showingText = true;
 setInterval(function() {
     var logoText = document.querySelector('.logo-text');
     var logoIcon = document.querySelector('.logo-icon');
     
     if (showingText) {
-        logoText.style.display = 'none';
-        logoIcon.style.display = 'block';
+        logoText.style.opacity = '0';
+        setTimeout(function() {
+            logoText.style.display = 'none';
+            logoIcon.style.display = 'block';
+            logoIcon.style.opacity = '1';
+        }, 300);
     } else {
-        logoText.style.display = 'block';
-        logoIcon.style.display = 'none';
+        logoIcon.style.opacity = '0';
+        setTimeout(function() {
+            logoIcon.style.display = 'none';
+            logoText.style.display = 'block';
+            logoText.style.opacity = '1';
+        }, 300);
     }
     showingText = !showingText;
-}, 3000);  // 3000ms = 3 seconds (change to 2000 for 2 seconds)
+}, 3000);
     
 // ============ PAGE SWITCHING ============
 function showPage(pageId) {
