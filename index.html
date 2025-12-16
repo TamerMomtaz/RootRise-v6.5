@@ -168,7 +168,7 @@
 }
 
 .logo-text, .logo-icon {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
 }
 
 .logo-icon {
@@ -312,7 +312,7 @@
         }
 
         .stat-item { text-align: center; }
-        .stat-value { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 700; color: var(--brand-color); }
+        .stat-value { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--brand-color); }
        .stat-label { font-size: 16px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; max-width: 120px; line-height: 1.4; margin: 0 auto; }
         /* Three Pillars */
         .pillars {
@@ -1184,19 +1184,22 @@ var eyeData = {
     'eye-sustainability': { icon: '🌱', name: 'Sustainability', desire: '"I want to be green"', focus: ['Environmental impact baseline', 'ESG reporting readiness', 'Green certification pathways', 'Sustainable operations roadmap'], agents: ['The Marvin — ESG assessment', 'The Ohno — Resource efficiency', 'The Ricardo — Green export opportunities'] }
 };
 
-    // ============ SCROLL LOGO SWAP ============
-window.addEventListener('scroll', function() {
+   // ============ CYCLING LOGO ANIMATION ============
+var showingText = true;
+setInterval(function() {
     var logoText = document.querySelector('.logo-text');
     var logoIcon = document.querySelector('.logo-icon');
     
-    if (window.scrollY > 80) {
+    if (showingText) {
         logoText.style.display = 'none';
         logoIcon.style.display = 'block';
     } else {
         logoText.style.display = 'block';
         logoIcon.style.display = 'none';
     }
-});
+    showingText = !showingText;
+}, 3000);  // 3000ms = 3 seconds (change to 2000 for 2 seconds)
+    
 // ============ PAGE SWITCHING ============
 function showPage(pageId) {
     document.getElementById('home-page').classList.remove('active');
