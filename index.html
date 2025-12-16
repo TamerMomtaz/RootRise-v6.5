@@ -155,12 +155,25 @@
         }
 
         .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--brand-color);
-            letter-spacing: 2px;
-        }
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--brand-color);
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-text, .logo-icon {
+    transition: opacity 0.3s ease;
+}
+
+.logo-icon {
+    height: 45px;
+    width: auto;
+    border-radius: 50%;
+    display: none;
+}
 
         .nav-links {
             display: flex;
@@ -867,7 +880,10 @@
     <!-- ==================== HOME PAGE ==================== -->
     <div class="page active" id="home-page">
         <nav class="home-nav">
-            <div class="nav-logo">RootRise</div>
+           <div class="nav-logo" id="nav-logo">
+    <span class="logo-text">RootRise</span>
+    <img class="logo-icon" src="rootrise-logo.jpg" alt="RootRise">
+</div>
             <div class="nav-links">
                 <span class="nav-link" id="link-pillars">How It Works</span>
                 <span class="nav-link" id="link-philosophy">The &I</span>
@@ -1165,6 +1181,19 @@ var eyeData = {
     'eye-sustainability': { icon: '🌱', name: 'Sustainability', desire: '"I want to be green"', focus: ['Environmental impact baseline', 'ESG reporting readiness', 'Green certification pathways', 'Sustainable operations roadmap'], agents: ['The Marvin — ESG assessment', 'The Ohno — Resource efficiency', 'The Ricardo — Green export opportunities'] }
 };
 
+    // ============ SCROLL LOGO SWAP ============
+window.addEventListener('scroll', function() {
+    var logoText = document.querySelector('.logo-text');
+    var logoIcon = document.querySelector('.logo-icon');
+    
+    if (window.scrollY > 80) {
+        logoText.style.display = 'none';
+        logoIcon.style.display = 'block';
+    } else {
+        logoText.style.display = 'block';
+        logoIcon.style.display = 'none';
+    }
+});
 // ============ PAGE SWITCHING ============
 function showPage(pageId) {
     document.getElementById('home-page').classList.remove('active');
