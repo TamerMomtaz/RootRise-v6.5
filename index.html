@@ -588,6 +588,11 @@
             background: var(--bg-hero);
             border-bottom: 4px solid var(--brand-color);
         }
+        .arch-nav {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 0 20px 0;
+   }
 
         .badge {
             display: inline-block;
@@ -904,9 +909,9 @@
     <!-- ==================== HOME PAGE ==================== -->
     <div class="page active" id="home-page">
         <nav class="home-nav">
-           <div class="nav-logo" id="nav-logo">
+          <div class="nav-logo" id="nav-logo">
     <span class="logo-text">RootRise</span>
-   <img class="logo-icon" src="./rootrise-logo.jpg" alt="RootRise">
+    <img class="logo-icon" src="./rootrise-logo-smooth.png" alt="RootRise">
 </div>
             <div class="nav-links">
                 <span class="nav-link" id="link-pillars">How It Works</span>
@@ -1029,7 +1034,13 @@
     <!-- ==================== ARCHITECTURE PAGE ==================== -->
     <div class="page" id="arch-page">
         <header class="arch-header">
-            <div class="badge">Architecture v6.5</div>
+    <nav class="arch-nav">
+        <div class="nav-logo">
+            <span class="logo-text">RootRise</span>
+            <img class="logo-icon" src="./rootrise-logo-smooth.png" alt="RootRise">
+        </div>
+    </nav>
+    <div class="badge">Architecture v6.5</div>
             <h1>The RootRise System</h1>
             <p class="arch-subtitle">Complete SME diagnostic architecture</p>
             <div class="back-btn" id="back-to-home">← Back to Home</div>
@@ -1205,19 +1216,13 @@ var eyeData = {
     'eye-sustainability': { icon: '🌱', name: 'Sustainability', desire: '"I want to be green"', focus: ['Environmental impact baseline', 'ESG reporting readiness', 'Green certification pathways', 'Sustainable operations roadmap'], agents: ['The Marvin — ESG assessment', 'The Ohno — Resource efficiency', 'The Ricardo — Green export opportunities'] }
 };
 
-  // ============ SMOOTH CYCLING LOGO ANIMATION ============
+ // ============ SMOOTH CYCLING LOGO ANIMATION (GLOBAL) ============
 var showingText = true;
-var logoTexts = document.querySelectorAll('.logo-text');
-var logoIcons = document.querySelectorAll('.logo-icon');
 
-// Set initial state
-for (var i = 0; i < logoIcons.length; i++) {
-    logoIcons[i].style.opacity = '0';
-    logoIcons[i].style.display = 'block';
-    logoIcons[i].style.position = 'absolute';
-}
-
-setInterval(function() {
+function animateLogos() {
+    var logoTexts = document.querySelectorAll('.logo-text');
+    var logoIcons = document.querySelectorAll('.logo-icon');
+    
     for (var i = 0; i < logoTexts.length; i++) {
         if (showingText) {
             logoTexts[i].style.opacity = '0';
@@ -1228,7 +1233,23 @@ setInterval(function() {
         }
     }
     showingText = !showingText;
-}, 3000);
+}
+
+// Initialize all logos
+function initLogos() {
+    var logoIcons = document.querySelectorAll('.logo-icon');
+    for (var i = 0; i < logoIcons.length; i++) {
+        logoIcons[i].style.opacity = '0';
+        logoIcons[i].style.display = 'block';
+        logoIcons[i].style.position = 'absolute';
+    }
+}
+
+// Run on page load
+initLogos();
+
+// Start the animation loop (runs forever across both pages)
+setInterval(animateLogos, 3000);
     
 // ============ PAGE SWITCHING ============
 function showPage(pageId) {
